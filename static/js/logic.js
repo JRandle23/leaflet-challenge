@@ -104,9 +104,7 @@ d3.json(queryUrl, function(earthquakeData) {
       
       // Each feature a popup describing the place and time of the earthquake
       onEachFeature: function(feature, layer) {
-        layer.bindPopup("<h3>Location: " + feature.properties.place + "</h3><hr><p>Date: "
-        + new Date(feature.properties.time) + "</p><hr><p>Magnitude: " + feature.properties.mag + "</p>" 
-        + "</p><hr><p>Depth: " + feature.geometry.coordinates[2] + "</p>");
+        layer.bindPopup(`<h3>Location: ${feature.properties.place}</h3><hr><p>Date: ${new Date(feature.properties.time)}</p><hr><p>Magnitude: ${feature.properties.mag}</p></p><hr><p>Depth (km): ${feature.geometry.coordinates[2]}</p>`);
       }
     }).addTo(earthquakes);
 
