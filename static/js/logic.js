@@ -8,7 +8,7 @@ var earthquakes = L.layerGroup ();
 var lightmap = L.tileLayer("https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}", {
   attribution:  "Map data &copy; <a href=\"https://www.openstreetmap.org/\">OpenStreetMap</a> contributors, <a href=\"https://creativecommons.org/licenses/by-sa/2.0/\">CC-BY-SA</a>, Imagery © <a href=\"https://www.mapbox.com/\">Mapbox</a>",
   tileSize: 500,
-  maxZoom: 2,
+  maxZoom: 18,
   zoomOffset: -1,
   id: "mapbox/light-v10",
   accessToken: API_KEY
@@ -18,7 +18,7 @@ var lightmap = L.tileLayer("https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/
 var satelitemap = L.tileLayer("https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}", {
   attribution: "© <a href='https://www.mapbox.com/about/maps/'>Mapbox</a> © <a href='http://www.openstreetmap.org/copyright'>OpenStreetMap</a> <strong><a href='https://www.mapbox.com/map-feedback/' target='_blank'>Improve this map</a></strong>",
   tileSize: 500,
-  maxZoom: 2,
+  maxZoom: 18,
   zoomOffset: -1,
   id: "mapbox/satellite-v9",
   accessToken: API_KEY
@@ -28,7 +28,7 @@ var satelitemap = L.tileLayer("https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{
 var darkmap = L.tileLayer("https://api.mapbox.com/styles/v1/mapbox/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}", {
   attribution: "Map data &copy; <a href=\"https://www.openstreetmap.org/\">OpenStreetMap</a> contributors, <a href=\"https://creativecommons.org/licenses/by-sa/2.0/\">CC-BY-SA</a>, Imagery © <a href=\"https://www.mapbox.com/\">Mapbox</a>",
   tileSize: 500,
-  maxZoom: 2,
+  maxZoom: 18,
   zoomOffset: -1,
   id: "dark-v10",
   accessToken: API_KEY
@@ -105,7 +105,8 @@ d3.json(queryUrl, function(earthquakeData) {
       // Each feature a popup describing the place and time of the earthquake
       onEachFeature: function(feature, layer) {
         layer.bindPopup("<h3>Location: " + feature.properties.place + "</h3><hr><p>Date: "
-        + new Date(feature.properties.time) + "</p><hr><p>Magnitude: " + feature.properties.mag + "</p>");
+        + new Date(feature.properties.time) + "</p><hr><p>Magnitude: " + feature.properties.mag + "</p>" 
+        + "</p><hr><p>Depth: " + feature.geometry.coordinates[2] + "</p>");
       }
     }).addTo(earthquakes);
 
