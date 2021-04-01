@@ -61,7 +61,7 @@ L.control.layers(baseMaps, overlayMaps, {
 }).addTo(myMap);
 
 
-// Perform a GET request to the query URL
+// Read in data from URL
 d3.json(queryUrl, function(earthquakeData) {
     console.log(earthquakeData);
 
@@ -69,7 +69,7 @@ d3.json(queryUrl, function(earthquakeData) {
       return magnitude * 3;
     };
 
-      // Determine the marker color by depth
+    // Determine the marker color by depth
     function chooseColor(depth) {
       switch(true) {
         case depth > 90:
@@ -89,9 +89,8 @@ d3.json(queryUrl, function(earthquakeData) {
     // Create a GeoJSON layer containing the features array
     L.geoJSON(earthquakeData, {
       pointToLayer: function (feature, latlng) {
-        return L.circleMarker(latlng, 
-          // Set the style of the markers based on properties.mag
-          {
+        return L.circleMarker(latlng, {
+            // Set marker style with magnitude and depth
             radius: markerSize(feature.properties.mag),
             fillColor: chooseColor(feature.geometry.coordinates[2]),
             fillOpacity: 1,
@@ -102,13 +101,13 @@ d3.json(queryUrl, function(earthquakeData) {
         );
       },
       
-      // Each feature a popup describing the place and time of the earthquake
+      // Popup on each feature with place, magnitude and depth 
       onEachFeature: function(feature, layer) {
         layer.bindPopup(`<h3>Location: ${feature.properties.place}</h3><hr><p>Date: ${new Date(feature.properties.time)}</p><hr><p>Magnitude: ${feature.properties.mag}</p></p><hr><p>Depth (km): ${feature.geometry.coordinates[2]}</p>`);
       }
     }).addTo(earthquakes);
 
-    // Sending our earthquakes layer to myMap
+    // Sending earthquakes layer to myMap
     earthquakes.addTo(myMap);
 
       // Add legend
